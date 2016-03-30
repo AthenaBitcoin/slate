@@ -18,7 +18,13 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the [Athena Bitcoin](http://www.athenabitcoin.com) retail API.  Using this API, you'll be able to offer customer's the opportunity to purchase Bitcoin.  If you're new with Bitcoin, there are numerous places online where you can read up on the technology.  Coin Desk's [Introduction to Bitcoin](http://www.coindesk.com/information/) is a great place to get started.
+
+This API, and associated endpoints is intended, to allow a merchant to integrate selling Bitcoin, or Gift Cards denominated in Bitcoin, into their Point of Sale system.  This is API is *not* intended for trading.
+
+## Wallets
+
+In order to use bitcoin, customers will need to store their Bitcoin in a wallet.  While customers can use any bitcoin wallet, Athena has both a [iOS](http://bit.ly/BTCWalletAppStore) and an [Android](http://bit.ly/BTCWalletAndroid) wallet.  We encourage users use the Athena Wallet.
 
 We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
@@ -165,4 +171,3 @@ This endpoint retrieves a specific kitten.
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to retrieve
-
