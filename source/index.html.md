@@ -1,9 +1,8 @@
 ---
-title: API Reference
+title: Athena Retail API Reference
 
 language_tabs:
-  - shell
-  - ruby
+  - json
   - python
 
 toc_footers:
@@ -22,47 +21,77 @@ Welcome to the [Athena Bitcoin](http://www.athenabitcoin.com) retail API.  Using
 
 This API, and associated endpoints is intended, to allow a merchant to integrate selling Bitcoin, or Gift Cards denominated in Bitcoin, into their Point of Sale system.  This is API is *not* intended for trading.
 
+## Version
+
+This is Version 1 (v1) of the API.  Feedback is enouraged and appreciated.
+
 ## Wallets
 
 In order to use bitcoin, customers will need to store their Bitcoin in a wallet.  While customers can use any bitcoin wallet, Athena has both a [iOS](http://bit.ly/BTCWalletAppStore) and an [Android](http://bit.ly/BTCWalletAndroid) wallet.  We encourage users use the Athena Wallet.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as
+ a base for your own API's documentation.
 
 # Authentication
 
-> To authorize, use this code:
+Authentication for the API requires an API Key.  All tokens are tied to a business entity (a Firm).  The firm is responsible for making sure proceeds from any sales are sent to Athena.  Firms can have multiple points of sale.  A point of sale will be the terminal from which a transaction can occur.  _API Keys are assigned at the Point of Sale_ level.
 
-```ruby
-require 'kittn'
+Once the firm has the appropriate paper work in place, just let us know, how many terminals Bitcoin can be sold from. We'll also need to know physical location for each point of sale.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+For now you can write [development@athenabitcoin.com](mailto:development@athenabitcoin.com) to request a key.
 
-```python
-import kittn
+# Retail Transactions
 
-api = kittn.authorize('meowmeowmeow')
-```
+The "guts" of the API is the Retail Transaction.  The retail transaction is the key resource that you will use when making a purchase with Athena.    Through this resource, you'll l update the status of the transaction and be able to be updated about the progress from initiation to completion.
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+## Initiate a Transaction
 
-> Make sure to replace `meowmeowmeow` with your API key.
+### HTTP Request
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+`POST https://api.athenabitcoin.com/v1/retail_transaction/initiate`
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+### Post Parameters
 
-`Authorization: meowmeowmeow`
+Parameter | Default | Description
+--------- | ------- | -----------
+auth_token | - | *Required* parameter to describe where the transaction is occuring.
+request_amount | 1000 | The amount, in US Dollars, the customer would like to purchase.  This parameter may affect the price, how long the quote (the price) we offer is valid for & what identification will be needed in order to complete the transaction.
+clordid | - | *Required* A string that identifies this transaction.  Must be unique for this auth_token.
+request_time_utc | - | *Required* The time at which the request is being made.
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+
+<aside class="success">
+On Success, 200, there will be a json response that has paremeters like the following
 </aside>
+
+
+> If the request succeeds, the user will receive JSON like the following:
+
+```json
+[
+  {
+    "clordid": "trans-uuid",
+    "authorized_amount": 50,
+    "vending_price": 484.30,
+    "authorization_expires_utc": "2016-04-15T23:59",
+    "order_status": 'A',
+    "required_info": [
+          "cell_number",
+          ...
+       ]
+  }
+]
+```
+
+Parameter | Description
+----------|------------
+clordid   | Echoing back what was sent
+authorized_amount | An amount equal to, *or less than* the amount requested.  This is the maximum amount, in US dollars, that we can sell for this transaction.
+vending_price | The price at which we are offering to sell.  We may quote prices to the one hundred millionth of a Bitcoin, a [Satoshi](https://en.bitcoin.it/wiki/Satoshi_%28unit%29).
+authorization_expires_utc | The time, in UTC in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the transaction will expire.
+order_status: The order status of the order.  See the [Order Status Codes](#OrdStatusCodes) for their meanings and descriptions.
 
 # Kittens
 
