@@ -10,6 +10,8 @@ toc_footers:
 
 includes:
   - errors
+  - required_info
+  - transaction_status
 
 search: true
 ---
