@@ -3,7 +3,6 @@ title: Athena Retail API Reference
 
 language_tabs:
   - json
-  - python
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
