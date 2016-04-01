@@ -62,7 +62,6 @@ request_amount | 1000 | The amount, in US Dollars, the customer would like to pu
 clordid | - | *Required* A string that identifies this transaction.  Must be unique for this auth_token.
 request_time_utc | - | *Required* The time at which the request is being made.
 
-
 <aside class="success">
 On Success, 200, there will be a json response that has paremeters like the following
 </aside>
@@ -93,6 +92,22 @@ authorized_amount | An amount equal to, *or less than* the amount requested.  Th
 vending_price | The price at which we are offering to sell.  We may quote prices to the one hundred millionth of a Bitcoin, a [Satoshi](https://en.bitcoin.it/wiki/Satoshi_%28unit%29).
 authorization_expires_utc | The time, in UTC in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, when the transaction will expire.
 order_status: The order status of the order.  See the [Order Status Codes](#OrdStatusCodes) for their meanings and descriptions.
+
+
+## Provide Customer Information
+
+### HTTP Request
+
+`POST https://api.athenabitcoin.com/v1/retail_transaction/info_submit`
+
+### Post Parameters
+
+(Info Parameter)[#required-info] | Description
+--------- | -----------
+Parameter | provided information (see table for how data is to be submitted.)
+
+
+
 
 # Kittens
 
