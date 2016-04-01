@@ -5,7 +5,7 @@
 </aside>
 
 |Code|Data Description|
------------------------
+----|------------------
 |gov_id| A photo (png or jpeg) of the customer's non-expired governmnt issued id|
 |sms_tel| A US/Canadian telephone number the customer can receive an sms text message on|
 |sms_auth| The code that was sent to the customer echoed back.  This will confirm the phone number they provided is theirs|
