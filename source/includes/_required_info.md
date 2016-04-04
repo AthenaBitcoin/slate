@@ -12,3 +12,4 @@
 |photo| A picture (png/jpeg) of the customer.|
 |name| Customer's full legal name|
 |address| Customer's homee or business address (including zip code)|
+|agent_id| An identification code identifying which rep has verified the photo and or gov_id|
