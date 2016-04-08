@@ -18,10 +18,12 @@ search: true
 
 # Introduction
 
-Welcome to the [Athena Bitcoin](http://www.athenabitcoin.com) retail API.  Using this API, you'll be able to offer customer's the opportunity to purchase Bitcoin.  If you're new with Bitcoin, there are numerous places online where you can read up on the technology.  Coin Desk's [Introduction to Bitcoin](http://www.coindesk.com/information/) is a great place to get started.
+Welcome to the [Athena Bitcoin](http://www.athenabitcoin.com) retail API.  Using this API, you'll be able to offer customer's the opportunity to purchase Bitcoin.  If you're new with Bitcoin, there are numerous places online where you can read up on the technology.  Coin Desk's [Introduction to Bitcoin](http://www.coindesk.com/information/what-is-bitcoin/) is a great place to get started.
 
-This API, and associated endpoints is intended, to allow a merchant to integrate selling Bitcoin, or Gift Cards denominated in Bitcoin, into their Point of Sale system.  This is API is *not* intended for trading.
+This API, and associated endpoints, is intended to allow a merchant to integrate selling gift cards denominated in Bitcoin, at their Point of Sale system.  This is API is *not* intended for trading.
 
+Why is a special API necessary?  And why can you just not sell gift cards loaded with Bitcoin as ordinary gift cards... or put another way: why is this API necessary?  In the US Bitcoin is classified by FinCen as a "[convertible virtual currency](https://www.fincen.gov/statutes_regs/guidance/html/FIN-2013-G001.html)."  The effect of that is businesses selling Bitcoin, like Athena, have a number of regulatory obligations that sellers of regular gift cards do not have.  This API is intended to address those obligations.  Additionally, the value of Bitcoin fluctates compared to other currencies.  Through this API, users can see what at what price Athena is able to sell Bitcoin.
+  
 ## Version
 
 This is Version 1 (v1) of the API.  Feedback is enouraged and appreciated.
