@@ -23,7 +23,7 @@ Welcome to the [Athena Bitcoin](http://www.athenabitcoin.com) retail API.  Using
 This API, and associated endpoints, is intended to allow a merchant to integrate selling gift cards denominated in Bitcoin, at their Point of Sale system.  This is API is *not* intended for trading.
 
 Why is a special API necessary?  And why can you just not sell gift cards loaded with Bitcoin as ordinary gift cards... or put another way: why is this API necessary?  In the US Bitcoin is classified by FinCen as a "[convertible virtual currency](https://www.fincen.gov/statutes_regs/guidance/html/FIN-2013-G001.html)."  The effect of that is businesses selling Bitcoin, like Athena, have a number of regulatory obligations that sellers of regular gift cards do not have.  This API is intended to address those obligations.  Additionally, the value of Bitcoin fluctates compared to other currencies.  Through this API, users can see what at what price Athena is able to sell Bitcoin.
-  
+
 ## Version
 
 This is Version 1 (v1) of the API.  Feedback is enouraged and appreciated.
@@ -116,9 +116,63 @@ order_status: The order status of the order.  See the [Order Status Codes](#OrdS
 ]
 ```
 
-As more data becomes from the customer, it can be submitted via sucessive submissions.  One would
+As more data becomes from the customer, it can be submitted via sucessive submissions.  One would call info_submit with additional data.
 
 
 (Info Parameter)[#required-info] | Description
 --------- | -----------
 Parameter | provided information (see table for how data is to be submitted.)
+
+
+## Receive Address
+
+This endpoint is intended for the user to submit the address where they would like the Bitcoin sent.
+
+### HTTP Request
+
+`POST https://api.athenabitcoin.com/v1/retail_transaction/address_submit`
+
+### Parameters
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+clordid   | True     | N/A     | Client Order Id (ClOrdId) Associated with this order |
+addr | True     | N/A     | The bitcoin address where the bitcoin should be sent |
+
+## Payment Received
+
+As the merchant receives payment for a Bitcoin, or Bitcoin loaded gift card, sale the merchant may elect to provide incremental updates to Athena.  Only once athena acknowledges and affirms the money was received will we consumate the trade.
+
+One instance where a merchant may use this feature is when a customer would like to purchase $100 in Bitcoin.  After [Initiating](#Initiate a Transaction) the transaction and receiving the appropriate authorization, the customer realizes rather than 5 $20 bills, they have 4.  The merchant may notify Athena $80 was received, and the customer can either dig in their pocket more - or go on to complete the transaction.
+
+Another instance where this feature may be used is if the merchant integrates with a bill scanner.  In that case, the merchant may notify Athena whenever a bill is entered is accepted into the bill acceptor.  Had the customer submitted 4 bills in this way, 4 separate calls to this endpoint could be made.
+
+### HTTP Request
+
+`POST https://api.athenabitcoin.com/v1/retail_transaction/payment_recv`
+
+### Parameters
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+clordid   | True     | N/A     | Client Order Id (ClOrdId) Associated with this order |
+recv\_amount | True     | N/A     | The amount the merchant has received for this transaction. |
+recv\_currecy| False | USD | The curency; *Reserved for Multi-currency Support.*
+Values other than USD will be rejected.
+
+## Complete a Transaction
+
+The endpoint to be called once all steps of the process are complete.  The result of this transaction will be to issue the customer both an Athena Transaction Confirmation and valid Transaction Id for the Bitcoin Blockchain.  (Using this transaction id, the user can independently confirm the bitcoin have been sent to the wallet address they provided.)
+
+### HTTP Request
+
+`POST https://api.athenabitcoin.com/v1/retail_transaction/complete`
+
+### Parameters
+
+Parameter | Required | Default | Description
+--------- | -------- | ------- | -----------
+clordid   | True     | N/A     | Client Order Id (clOrdId) Associated with this order |
+total_recv | True | N/A | The total amount received as part of this transaction
+recv\_currecy| False | USD | The curency; *Reserved for Multi-currency Support.*
+Values other than USD will be rejected.
