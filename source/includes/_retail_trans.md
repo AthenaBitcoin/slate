@@ -8,36 +8,43 @@ The "guts" of the API is the Retail Transaction.  The retail transaction is the 
 
 `POST https://api.athenabitcoin.com/v1/retail_transaction/initiate`
 
+```curl
+
+curl https://api.athenabitcoin.com/v1/retail_transaction/initiate
+   -X POST
+   -H 'Content-Type: applicaton/json'
+   -H 'Authorization: Basic apikey'
+   -d '{"request_amount": "1000.00",
+        "clordid": "abcdef",
+        "auth_token": "xyz"}
+```
+
 ### Post Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-auth_token | - | *Required* parameter to describe where the transaction is occuring.
-request_amount | 1000 | The amount, in US Dollars, the customer would like to purchase.  This parameter may affect the price, how long the quote (the price) we offer is valid for & what identification will be needed in order to complete the transaction.
+request\_amount | 1000 | The amount, in US Dollars, the customer would like to purchase.  This parameter may affect the price, how long the quote (the price) we offer is valid for & what identification will be needed in order to complete the transaction.
 clordid | - | *Required* A string that identifies this transaction.  Must be unique for this auth_token.
-request_time_utc | - | *Required* The time at which the request is being made.
+request\_currency | USD | **Ignored** Reserved for multicurrency
 
 <aside class="success">
-On Success, 200, there will be a json response that has paremeters like the following
-</aside>
-
-
-> If the request succeeds, the user will receive JSON like the following:
+On Success, 200, there will be a json response</aside>
 
 ```json
-[
-  {
+{
+  "data": {
+
     "clordid": "trans-uuid",
     "authorized_amount": 50,
     "vending_price": 484.30,
     "authorization_expires_utc": "2016-04-15T23:59",
-    "order_status": 'A',
+    "order_status": "A",
     "required_info": [
           "cell_number",
           ...
        ]
   }
-]
+}
 ```
 
 Parameter | Description
