@@ -2,7 +2,7 @@
 title: Athena Retail API Reference
 
 language_tabs:
-
+  - curl
   - json
 
 toc_footers:
